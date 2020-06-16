@@ -1,46 +1,59 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 
 // TODOs
 // Add a tutorial / instructions
 // Make it look nice
+// Add input validation
+// Allow signing links?
 // Add debugging features
 // Add (more) templates
 // Add this to my projects page. Write about stateless web apps on my projects page
+
+const TEMPLATES = [
+  "#type=email&action=unsubscribe&userId=%s&campaign=Summer2020",
+  "#target=www.youtube.com&video=%s",
+  "#shop=www.amazon.com&productId=B00V155S46&couponCode=%s",
+]
+
+function randomChoice<T>(options: T[]): T {
+  return options[Math.floor(Math.random() * options.length)];
+}
 
 class App extends React.Component<any, State> {
   constructor(props: any) {
     super(props);
     this.state = {
       url: "https://example.com",
-      template: "#type=email&action=unsubscribe&userId=%s&campaign=Summer2020",
+      template: randomChoice(TEMPLATES),
+      page: "https://projects.six-two.dev/react_redirect/follow.html",
     }
   }
 
   render() {
-    let encoded = "LNK" + this.uriSafeEncode(this.state.url);
-    let link = "follow.html"
-    // let link = "file:///home/user/c/react_redirect/public/follow.html"
-    link += this.state.template.replace("%s", encoded);
+    const encoded = "LNK" + this.uriSafeEncode(this.state.url);
+    const params = this.state.template.replace("%s", encoded);
+    const link = this.state.page + params;
 
     return (
       <div className="App">
-      <h1>Create a (deceptive) redirect link</h1>
-      URL:<input type="text" onChange={this.onUrlChange} value={this.state.url} />
-      <hr />
-      Template:<input type="text" onChange={this.onTemplateChange} value={this.state.template} />
-      <hr />
-      Created link: <a target="_blank" rel="noopener noreferrer" href={link}>{link}</a>
+        <h1>Create a (deceptive) redirect link</h1>
+        {this.renderInputRow("Destination URL", "The URL that you want the user to be redirected to", this.state.url, (e: any) => this.setState({ url: e.target.value }))}
+        {this.renderInputRow("Template", "The template can be used to mislead the person viewing the link into believing that it has a different purpose (for example to disguise it as an unsubscribe link)", this.state.template, (e: any) => this.setState({ template: e.target.value }))}
+        {this.renderInputRow("Redirect page URL", "The URL where your server hosts your redirect page", this.state.page, (e: any) => this.setState({ page: e.target.value }))}
+        <h2>Your link is</h2>
+        <a target="_blank" rel="noopener noreferrer" href={link}>{link}</a>
       </div>
     );
   }
 
-  onUrlChange = (e: any) => {
-    this.setState({url: e.target.value});
-  }
-
-  onTemplateChange = (e: any) => {
-    this.setState({template: e.target.value});
+  renderInputRow(label: string, title: string, value: string, onValueChange: (e: any) => void) {
+    return <div className="input-row">
+      <div className="label">{label}</div>
+      <div className="input">
+        <input title={title} type="text" onChange={onValueChange} value={value} />
+      </div>
+    </div>
   }
 
   uriSafeEncode(data: string): string {
@@ -55,6 +68,7 @@ class App extends React.Component<any, State> {
 interface State {
   url: string,
   template: string,
+  page: string,
 }
 
 export default App;
