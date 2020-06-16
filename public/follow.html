@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Follow a redirect link"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+    <title>Redirect</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="text/ecmascript">
+    const MAGIC_URL_MARKER = "LNK"; //Short for LiNK
+    const VALID_URL_REGEX = /^(http|https):\/\/.*/; // check for "http(s)://" at beginning
+
+    // Search order:
+    // first try the complete hash
+    // then try parameters from back to front
+
+    function followRedirect(url) {
+      let redirect = findRedirect(handleUndefined(url));
+      if (redirect) {
+        window.location.replace(redirect);
+      }
+    }
+
+    function findRedirect(uri) {
+      uri = handleUndefined(uri);
+      let hash = uri.hash;
+      let result = null;
+      if (hash) {
+        hash = hash.substr(1); // remove leading #
+        //check if hash itself contains a redirect link
+        result = findInString(hash);
+        if (result === null) {
+          // search in hash params
+          result = findInParams(new URLSearchParams(hash));
+        }
+      }
+      if (result === null) {
+        // search in normal url params
+        result = findInParams(uri.searchParams);
+      }
+      return result;
+    }
+
+    function handleUndefined(url) {
+      return url || new URL(window.location.href);
+    }
+
+    function findInParams(params) {
+      let entries = [...params.entries()];
+      entries = entries.reverse();// check last ones first
+
+      for (const [key, value] of entries) {
+        let res = findInString(value);
+        console.log(key, "->", value, "decoded:", res);
+        if (res !== null) {
+          return res;
+        }
+      }
+      return null;
+    }
+
+    function findInString(str) {
+      try {
+        if (str.startsWith(MAGIC_URL_MARKER)) {
+          str = str.substr(MAGIC_URL_MARKER.length);
+          let decoded = decode(str);
+          if (decoded.match(VALID_URL_REGEX)) {
+            return decoded;
+          }
+        }
+      } catch (e) {
+        console.error("Error while decoding possible redirect link:", e);
+      }
+      return null;
+    }
+
+    // custom base64 decode with url safe chars and without padding
+    function decode(base64) {
+      base64 = base64
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+
+      // add padding again
+      let lastBlockSize = base64.length % 4;
+      if (lastBlockSize !== 0) {
+        base64 += ('===').slice(0, 4 - lastBlockSize);
+      }
+      return atob(base64);
+    }
+
+
+      followRedirect();
+      document.write("Not a valid redirect link");
+    </script>
+  </body>
+</html>
