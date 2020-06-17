@@ -7,6 +7,16 @@ h1, h2 {
   text-align: center;
 }
 
+button {
+  border: 1px solid gray;
+  border-radius: 10px;
+  color: white;
+  background-color: gray;
+  font-weight: bold;
+  padding: 3px;
+  cursor: pointer;
+}
+
 .input-row {
   display: flex;
   margin: 0px 5px 15px 5px;
@@ -35,6 +45,23 @@ h1, h2 {
   color: red;
 }
 
-.import-div {
+.link-div {
+  width: 90%;
+  border: 2px solid gray;
+  border-radius: 10px;
+  background-color: lightgray;
+  padding: 5px;
+  margin: auto;
   text-align: center;
+  overflow-wrap: break-word;
+}
+
+
+.initial-buttons {
+  button {
+    display: block;
+    margin: 15px auto;
+    width: 200px;
+    text-align: center;
+  }
 }
