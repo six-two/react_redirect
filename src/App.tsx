@@ -5,6 +5,7 @@ import * as Decode from './decode';
 import CreateLinkView, { TextFieldValues } from './CreateLinkView';
 
 // TODOs
+//minify redirect.js
 // Add a tutorial / instructions [partial]
 // Make it look nice [partial]
 // Allow signing links?
