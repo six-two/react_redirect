@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.scss';
+import * as API from './api';
 
 // TODOs
 // Add a tutorial / instructions
@@ -9,19 +10,8 @@ import './App.scss';
 // Add (more) templates [partial]
 // Add this to my projects page. Write about stateless web apps on my projects page
 
-const TEMPLATES = [
-  "#type=email&action=unsubscribe&userId=%s&campaign=Summer2020",
-  "#target=www.youtube.com&video=%s",
-  "#shop=www.amazon.com&productId=B00V155S46&couponCode=%s",
-];
 
-
-
-function randomChoice<T>(options: T[]): T {
-  return options[Math.floor(Math.random() * options.length)];
-}
-
-class App extends React.Component<any, State> {
+export default class App extends React.Component<any, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -32,9 +22,8 @@ class App extends React.Component<any, State> {
   }
 
   render() {
-    const encoded = "LNK" + this.uriSafeEncode(this.state.url);
-    const params = this.state.template.replace("%s", encoded);
-    const link = this.state.page + params;
+    const template = this.state.page + this.state.template;
+    const link = API.createRedirectUrl(template, this.state.url).url;
 
     return (
       <div className="App">
@@ -46,11 +35,6 @@ class App extends React.Component<any, State> {
         <a target="_blank" rel="noopener noreferrer" href={link}>{link}</a>
       </div>
     );
-  }
-
-  onDestinationChange(event: any) {
-
-    this.setState({ url: event.target.value });
   }
 
   renderInputRow(rowData: InputRowData, value: string, onValueChange: (e: any) => void) {
@@ -66,14 +50,35 @@ class App extends React.Component<any, State> {
       {error ? <div className="err-msg">{error}</div> : null}
     </div>;
   }
+}
 
-  uriSafeEncode(data: string): string {
-    const base64 = btoa(data);
-    return base64
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
-  }
+
+const TEMPLATES = [
+  "#type=email&action=unsubscribe&userId=%s&campaign=Summer2020",
+  "#target=www.youtube.com&video=%s",
+  "#shop=www.amazon.com&productId=B00V155S46&couponCode=%s",
+];
+
+const TARGET_DATA: InputRowData = {
+  label: "Destination URL",
+  description: "The URL that you want the user to be redirected to",
+  checkForErrors: API.checkUrlForErrors,
+}
+
+const TEMPLATE_DATA: InputRowData = {
+  label: "Template",
+  description: "The template can be used to mislead the person viewing the link into believing that it has a different purpose (for example to disguise it as an unsubscribe link)",
+  checkForErrors: API.checkTemplateForErrors,
+}
+
+const SERVER_DATA: InputRowData = {
+  label: "Redirect page URL",
+  description: "The URL where your server hosts your redirect page",
+  checkForErrors: API.checkUrlForErrors,
+}
+
+function randomChoice<T>(options: T[]): T {
+  return options[Math.floor(Math.random() * options.length)];
 }
 
 interface State {
@@ -87,43 +92,3 @@ interface InputRowData {
   description: string,
   checkForErrors: (value: string) => string,
 }
-
-function checkUrlForErrors(value: string): string {
-  if (!value.match(/^https?:\/\/.*/)) {
-    return "The URL has to start with 'http://' or 'https://' (without the quotes)"
-  }
-  if (value.match(/[ "<>{}^|]/g)) {
-    return "The URL contains some illegal characters that have not been properly escaped";
-  }
-  try {
-    let url = new URL(value);
-    return "";
-  } catch (e) {
-    return "Not a valid URL";
-  }
-}
-
-const TARGET_DATA: InputRowData = {
-  label: "Destination URL",
-  description: "The URL that you want the user to be redirected to",
-  checkForErrors: checkUrlForErrors,
-}
-
-const TEMPLATE_DATA: InputRowData = {
-  label: "Template",
-  description: "The template can be used to mislead the person viewing the link into believing that it has a different purpose (for example to disguise it as an unsubscribe link)",
-  checkForErrors: (value: string) => {
-    if (value.indexOf("%s") < 0) {
-      return "Template must contain a '%s' (without the quotes) to signal where to embed the encoded URL";
-    }
-    return "";
-  },
-}
-
-const SERVER_DATA: InputRowData = {
-  label: "Redirect page URL",
-  description: "The URL where your server hosts your redirect page",
-  checkForErrors: checkUrlForErrors,
-}
-
-export default App;
