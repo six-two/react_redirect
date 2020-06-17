@@ -1,15 +1,14 @@
 import React from 'react';
 import './App.scss';
-import * as API from './encode';
-import * as Decode from './decode';
+import * as Encoder from './Encoder';
+import * as Decoder from './Decoder';
 import CreateLinkView, { TextFieldValues } from './CreateLinkView';
 
 // TODOs
-//minify redirect.js
-// Add a tutorial / instructions [partial]
-// Make it look nice [partial]
+// Fix TODO make set / remove dups
+// minify redirect.js
+// Improve tutorial / instructions
 // Allow signing links?
-// Add debugging features
 // Add (more) templates [partial]
 // Add this to my projects page. Write about stateless web apps on my projects page
 
@@ -61,12 +60,12 @@ export default class App extends React.Component<any, State> {
     let url = window.prompt("Input the URL to import the data from");
     if (url) {
       try {
-        let redirectUrl = Decode.findRedirect(new URL(url));
+        let redirectUrl = Decoder.findRedirect(new URL(url));
         if (!redirectUrl) {
           alert("Your URL does not contain an embedded redirect link");
           return;
         }
-        let encoded = API.createRedirectUrl("%s", redirectUrl).url;//ignore errors
+        let encoded = Encoder.createRedirectUrl("%s", redirectUrl).url;//ignore errors
         let template = url.replace(encoded, "%s");
         let [page, params] = splitUrlIntoPageAndParams(template);
         let data: TextFieldValues = { page: page, template: params, url: redirectUrl };

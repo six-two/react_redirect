@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Encoder from './encode';
+import * as Encoder from './Encoder';
 import FieldEditView, { RowDescription } from './FieldEditView';
 
 const TARGET_DATA: RowDescription = {
