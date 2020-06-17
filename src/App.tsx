@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
-import * as API from './api';
+import * as API from './encode';
+import * as Decode from './decode';
 
 // TODOs
 // Add a tutorial / instructions
@@ -10,6 +11,7 @@ import * as API from './api';
 // Add (more) templates [partial]
 // Add this to my projects page. Write about stateless web apps on my projects page
 
+//Import test link: https://projects.six-two.dev/react_redirect/follow#LNKaHR0cHM6Ly9leGFtcGxlLm9yZw
 
 export default class App extends React.Component<any, State> {
   constructor(props: any) {
@@ -31,6 +33,11 @@ export default class App extends React.Component<any, State> {
         {this.renderInputRow(TARGET_DATA, this.state.url, (e: any) => this.setState({ url: e.target.value }))}
         {this.renderInputRow(TEMPLATE_DATA, this.state.template, (e: any) => this.setState({ template: e.target.value }))}
         {this.renderInputRow(SERVER_DATA, this.state.page, (e: any) => this.setState({ page: e.target.value }))}
+        <div className="import-div">
+          <button onClick={this.showImportDialog}>
+            Import from URL
+        </button>
+        </div>
         <h2>Your link is</h2>
         <a target="_blank" rel="noopener noreferrer" href={link}>{link}</a>
       </div>
@@ -50,6 +57,40 @@ export default class App extends React.Component<any, State> {
       {error ? <div className="err-msg">{error}</div> : null}
     </div>;
   }
+
+  showImportDialog = () => {
+    let url = window.prompt("Input the URL to import the data from");
+    if (url) {
+      try {
+        let redirectUrl = Decode.findRedirect(new URL(url));
+        if (!redirectUrl) {
+          alert("Your URL does not contain an embedded redirect link");
+          return;
+        }
+        let encoded = API.createRedirectUrl("%s", redirectUrl).url;//ignore errors
+        let template = url.replace(encoded, "%s");
+        let [page, params] = splitUrlIntoPageAndParams(template);
+        this.setState({ page: page, template: params, url: redirectUrl });
+      } catch (e) {
+        console.error("Error importing URL:", url, "\n", e);
+        alert("An error occured while importing the URL. Are you sure it is valid?");
+      }
+    }
+  }
+}
+
+function splitUrlIntoPageAndParams(url: string): [string, string] {
+  let parts = url.split("?", 2);
+  if (parts.length === 2) {
+    return [parts[0], "?" + parts[1]]
+  } else {
+    parts = url.split("#", 2);
+    if (parts.length === 2) {
+      return [parts[0], "#" + parts[1]]
+    }
+  }
+  // has no params
+  return [url, ""];
 }
 
 
