@@ -29,15 +29,20 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <h2>How it works</h2>
+    <p>This tool enables you to create a redirect link, that enables you to create a redirect link.
+    The website you want to redirect to gets scrambled into seemingly random data.
+    You can construct links that look like a something a user might be interested in, like a link to a video, discounted item, a unsubscribe link or whatever you can come up with.
+    </p>
+    <p>If you use it for phishing you might want to host your own redirect page (say <code>https://arnazon.com/deals</code>),
+    so that you can have a more convincing link (like <code>https://arnazon.com/deals?item=iPhone-11&coupon=LNKaHR0cHM6Ly9leGFtcGxlLmNvbQ</code>,
+    which would redirect you to <code>https://example.com</code>)
+    Just download <a href="follow.html">the redirect page</a> and host it yourself.
+    Put the URL of your page into the "Redirect page URL" field.
+    </p>
+    <p>You might ask yourself: "But why should you use this tool? I can make my server send a HTTP redirect. That is simpler."
+    And you would be right. The advantage of this is that you only need to upload a small page once and can decide later, where it should be pointing to.
+    This might come in handy if you can sneak this page (or the javascript it is using) onto a website (say using a file upload vulnerability).
+  You could then use the reputation of that website to trick users and avoid spam filters.</p>
   </body>
 </html>
