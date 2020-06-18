@@ -21,7 +21,7 @@ const TEMPLATES = [
 const EXAMPLE_STATE: TextFieldValues = {
   url: "https://example.com",
   template: randomChoice(TEMPLATES),
-  page: "https://projects.six-two.dev/react_redirect/follow.html",
+  page: "https://projects.six-two.dev/external.html",
 }
 
 function randomChoice<T>(options: T[]): T {
