@@ -5,12 +5,11 @@ import * as Decoder from './Decoder';
 import CreateLinkView, { TextFieldValues } from './CreateLinkView';
 
 // TODOs
-// Fix TODO make set / remove dups
-// minify redirect.js
 // Improve tutorial / instructions
-// Allow signing links?
-// Add (more) templates [partial]
-// Add this to my projects page. Write about stateless web apps on my projects page
+
+// --- Nice to have ---
+// Add more templates
+
 
 const TEMPLATES = [
   "#type=email&action=unsubscribe&userId=%s&campaign=Summer2020",

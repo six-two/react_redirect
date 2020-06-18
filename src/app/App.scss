@@ -32,11 +32,12 @@ button {
 
     input {
       width: 100%;
-      box-sizing:border-box;//fixes input being bigger than parent div
+      // fixes input being bigger than parent div
+      box-sizing: border-box;
     }
 
     .error {
-      background-color: red;
+      outline: 2px solid red;
     }
   }
 }
@@ -49,7 +50,7 @@ button {
   width: 90%;
   border: 2px solid gray;
   border-radius: 10px;
-  background-color: lightgray;
+  background-color: #eee;
   padding: 5px;
   margin: auto;
   text-align: center;

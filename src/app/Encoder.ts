@@ -3,10 +3,8 @@ export function checkUrlForErrors(value: string): string {
     return "The URL has to start with 'http://' or 'https://' (without the quotes)"
   }
   let invalidChars = value.match(/[ "<>{}^|]/g);
-  console.log(invalidChars);
   if (invalidChars) {
-    //TODO make set / remove dups
-    let invalidCharString = invalidChars.join("");
+    let invalidCharString = [...new Set(invalidChars)].join("', '");
     return "The URL contains some illegal characters that have not been properly escaped: '"
       + invalidCharString + "'";
   }
