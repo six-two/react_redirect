@@ -6,6 +6,7 @@ import CreateLinkView, { TextFieldValues } from './CreateLinkView';
 
 // TODOs
 // Improve tutorial / instructions
+// README.md
 
 // --- Nice to have ---
 // Add more templates
