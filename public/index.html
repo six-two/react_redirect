@@ -9,41 +9,48 @@
       name="description"
       content="Build a redirect url"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="stylesheet" href="%PUBLIC_URL%/index.css">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>Redirect link builder</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <h2>How it works</h2>
-    <p>This tool enables you to create a redirect link, that enables you to create a redirect link.
-    The website you want to redirect to gets scrambled into seemingly random data.
-    You can construct links that look like a something a user might be interested in, like a link to a video, discounted item, a unsubscribe link or whatever you can come up with.
-    </p>
-    <p>If you use it for phishing you might want to host your own redirect page (say <code>https://arnazon.com/deals</code>),
-    so that you can have a more convincing link (like <code>https://arnazon.com/deals?item=iPhone-11&coupon=LNKaHR0cHM6Ly9leGFtcGxlLmNvbQ</code>,
-    which would redirect you to <code>https://example.com</code>)
-    Just download <a href="follow.html">the redirect page</a> and host it yourself.
-    Put the URL of your page into the "Redirect page URL" field.
-    </p>
-    <p>You might ask yourself: "But why should you use this tool? I can make my server send a HTTP redirect. That is simpler."
-    And you would be right. The advantage of this is that you only need to upload a small page once and can decide later, where it should be pointing to.
-    This might come in handy if you can sneak this page (or the javascript it is using) onto a website (say using a file upload vulnerability).
-  You could then use the reputation of that website to trick users and avoid spam filters.</p>
+    <div class="page">
+      <header class="page-header">
+        <span class="page-title">Redirect link builder</span>
+        <nav>
+          <a href="https://github.com/six-two/react_redirect/blob/master/README.md#tutorial">
+            Short how to
+          </a>
+          <a href="https://github.com/six-two/react_redirect">
+            Source code
+          </a>
+          <a href="https://projects.six-two.dev/">
+            My other projects
+          </a>
+        </nav>
+      </header>
+      <div class="page-content">
+        <noscript>
+          <div class="no-script">
+            You need to enable JavaScript to run this app.
+          </div>
+        </noscript>
+        <div id="root">
+          If you see this message (longer than a few seconds) your browser could not load the application.
+          Here are some things that you can try to get it working:
+          <ul>
+            <li>Update your browser to the latest version</li>
+            <li>Disable content blocking plugins (like NoScript, AdBlock, ...) for this website</li>
+            <li>If you are on a mobile device: try opening this link on a laptop/desktop computer</li>
+            <li>Open this website with the latest version of Firefox or Chrome</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

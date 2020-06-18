@@ -36,7 +36,6 @@ export default class App extends React.Component<any, State> {
 
   render() {
     return <div className="App">
-      <h1>Create a (deceptive) redirect link</h1>
       {this.renderEditView()}
     </div>
   }
@@ -46,6 +45,7 @@ export default class App extends React.Component<any, State> {
       return <CreateLinkView data={this.state.data} setData={this.setData} />
     } else {
       return <div className="initial-buttons">
+        <h2>What do you want to do?</h2>
         <button onClick={this.loadDefaults}>
           Create new link
         </button>
