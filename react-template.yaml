@@ -1,0 +1,9 @@
+title: Redirect link builder
+description: A small web app to build an innocent looking redirect link
+menu:
+  - title: Short how to
+    url: "https://github.com/six-two/react_redirect/blob/master/README.md#tutorial"
+  - title: Source code
+    url: "https://github.com/six-two/react_redirect"
+  - title: My other projects
+    url: "https://projects.six-two.dev/"
