@@ -3,7 +3,12 @@ description: A small web app to build an innocent looking redirect link
 menu:
   - title: Short how to
     url: "https://github.com/six-two/react_redirect/blob/master/README.md#tutorial"
+    id: page-nav-howto
   - title: Source code
     url: "https://github.com/six-two/react_redirect"
+    id: page-nav-source
   - title: My other projects
-    url: "https://projects.six-two.dev/"
+    url: "https://projects.six-two.dev"
+    id: page-nav-projects
+pre_build:
+  - template-tools/defaults.py <PROJECT>
