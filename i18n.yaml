@@ -1,6 +1,7 @@
-page-title:
-  en: Redirect link builder
-  de: Redirect-Link Generator
-page-nav-howto:
-  en: Short tutorial
-  de: Kurzes Tutorial
+translations:
+  page-title:
+    en: Redirect link builder
+    de: Redirect-Link Generator
+  page-nav-howto:
+    en: Short tutorial
+    de: Kurzes Tutorial
